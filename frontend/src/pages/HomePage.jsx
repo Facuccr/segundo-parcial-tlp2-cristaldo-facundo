@@ -31,6 +31,9 @@ export const HomePage = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    loadSuperheroes();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 pb-8">
