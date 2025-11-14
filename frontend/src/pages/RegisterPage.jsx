@@ -19,9 +19,53 @@ export const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {};
-
   // TODO: Implementar función handleSubmit
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (
+      !name.trim() ||
+      !lastname.trim() ||
+      !username.trim() ||
+      !email.trim() ||
+      !password.trim()
+    ) {
+      setError("completa todos los campos");
+      return;
+    }
+
+    setError("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          lastname,
+          username,
+          email,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        setError("no se pudo registrar el usuario");
+        setLoading(false);
+        return;
+      }
+
+      navigate("/home");
+    } catch (error) {
+      setError("Error en el server");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-8">
@@ -37,109 +81,92 @@ export const RegisterPage = () => {
           </p>
         </div>
 
-        <form onSubmit={(event) => {}}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label
-              htmlFor="username"
-              className="block text-gray-700 font-medium mb-2"
-            >
-              Usuario
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Elige un nombre de usuario"
-              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-medium mb-2"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="tu@email.com"
-              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-medium mb-2"
-            >
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Crea una contraseña segura"
-              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-gray-700 font-medium mb-2"
-            >
+            <label className="block text-gray-700 font-medium mb-2">
               Nombre
             </label>
             <input
               type="text"
-              id="name"
               name="name"
-              placeholder="Tu nombre"
-              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="Ingresa tu nombre"
+              value={name}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Apellido
+            </label>
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Ingresa tu apellido"
+              value={lastname}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Usuario
+            </label>
+            <input
+              type="text"
+              name="username"
+              placeholder="Ingresa tu usuario"
+              value={username}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Ingresa tu correo"
+              value={email}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           <div className="mb-6">
-            <label
-              htmlFor="lastname"
-              className="block text-gray-700 font-medium mb-2"
-            >
-              Apellido
+            <label className="block text-gray-700 font-medium mb-2">
+              Contraseña
             </label>
             <input
-              type="text"
-              id="lastname"
-              name="lastname"
-              placeholder="Tu apellido"
-              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+              type="password"
+              name="password"
+              placeholder="Crea una contraseña"
+              value={password}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded transition-colors"
+            disabled={loading}
+            className={`w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded transition-colors ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Registrarse
+            {loading ? "Creando..." : "Registrarse"}
           </button>
         </form>
-
-        <p className="text-center text-sm text-gray-600 mt-4">
-          ¿Ya tienes cuenta?{" "}
-          <Link
-            to="/login"
-            className="text-green-600 hover:text-green-800 font-medium"
-          >
-            Inicia sesión aquí
-          </Link>
-        </p>
       </div>
     </div>
   );
