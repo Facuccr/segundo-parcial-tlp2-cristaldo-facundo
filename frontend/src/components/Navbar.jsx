@@ -31,7 +31,23 @@ export const Navbar = () => {
     fetchUser();
   }, []);
 
-  const handleLogout = () => {};
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/api/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("error al cerrar sesion");
+      }
+
+      navigate("/login");
+    } catch (error) {
+      console.error("error en logout:", error);
+      alert("no se pudo cerrar sesion");
+    }
+  };
 
   return (
     <nav className="bg-gray-900 text-white h-16 left-0 right-0 shadow-lg sticky top-0 z-50">
