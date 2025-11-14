@@ -21,7 +21,6 @@ export const HomePage = () => {
 
       const result = await response.json();
 
-      // Tu backend devuelve: { message, data: [...] }
       setSuperheroes(result.data || []);
     } catch (error) {
       console.error("Error trayendo superhéroes:", error);
