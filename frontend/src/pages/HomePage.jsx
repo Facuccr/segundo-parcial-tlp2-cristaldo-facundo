@@ -1,47 +1,55 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { Loading } from "../components/Loading";
+
 export const HomePage = () => {
   // TODO: Integrar lógica para obtener superhéroes desde la API
   // TODO: Implementar useState para almacenar la lista de superhéroes
+  const [superheroes, setSuperheroes] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
   // TODO: Implementar función para recargar superhéroes
 
-  // Datos de ejemplo para las cards
-  const superheroes = [
-    {
-      id: 1,
-      superhero: "Superman",
-      image:
-        "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/644-superman.jpg",
-    },
-    {
-      id: 2,
-      superhero: "Batman",
-      image:
-        "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/70-batman.jpg",
-    },
-    {
-      id: 3,
-      superhero: "Wonder Woman",
-      image:
-        "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/720-wonder-woman.jpg",
-    },
-    {
-      id: 4,
-      superhero: "Spider-Man",
-      image:
-        "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/620-spider-man.jpg",
-    },
-    {
-      id: 5,
-      superhero: "Iron Man",
-      image:
-        "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/346-iron-man.jpg",
-    },
-    {
-      id: 6,
-      superhero: "Captain America",
-      image:
-        "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/149-captain-america.jpg",
-    },
-  ];
+  // // Datos de ejemplo para las cards
+  // const superheroes = [
+  //   {
+  //     id: 1,
+  //     superhero: "Superman",
+  //     image:
+  //       "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/644-superman.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     superhero: "Batman",
+  //     image:
+  //       "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/70-batman.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     superhero: "Wonder Woman",
+  //     image:
+  //       "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/720-wonder-woman.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     superhero: "Spider-Man",
+  //     image:
+  //       "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/620-spider-man.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     superhero: "Iron Man",
+  //     image:
+  //       "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/346-iron-man.jpg",
+  //   },
+  //   {
+  //     id: 6,
+  //     superhero: "Captain America",
+  //     image:
+  //       "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/149-captain-america.jpg",
+  //   },
+  // ];
 
   return (
     <div className="container mx-auto px-4 pb-8">
