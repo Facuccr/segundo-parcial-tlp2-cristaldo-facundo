@@ -20,7 +20,7 @@ export const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validación mínima
+    // validacion
     if (!username.trim() || !password.trim()) {
       setError("Todos los campos son obligatorios");
       return;
@@ -40,15 +40,14 @@ export const LoginPage = () => {
       });
 
       if (!response.ok) {
-        setError("Credenciales incorrectas. Intenta nuevamente.");
+        setError("credenciales incorrectas. intenta de nuevo");
         setLoading(false);
         return;
       }
 
-      // Login exitoso
       navigate("/home");
     } catch (error) {
-      setError("Error en el servidor. Intenta más tarde.");
+      setError("error en el servidor. intenta despues");
     } finally {
       setLoading(false);
     }
@@ -63,12 +62,10 @@ export const LoginPage = () => {
         </h2>
 
         {/* TODO: Mostrar este div cuando haya error */}
-        <div
-          className={`${
-            error ? "block" : "hidden"
-          } bg-red-100 text-red-700 p-3 rounded mb-4`}
-        >
-          <p className="text-sm">{error}</p>
+        <div className="hidden bg-red-100 text-red-700 p-3 rounded mb-4">
+          <p className="text-sm">
+            Error al crear la cuenta. Intenta nuevamente.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit}>

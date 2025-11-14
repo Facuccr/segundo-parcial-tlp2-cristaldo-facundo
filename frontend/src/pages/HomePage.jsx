@@ -14,15 +14,17 @@ export const HomePage = () => {
       });
 
       if (!response.ok) {
-        console.error("Error al cargar superheroes");
+        console.error("Error al cargar superhéroes");
         setSuperheroes([]);
         return;
       }
 
-      const data = await response.json();
-      setSuperheroes(data);
+      const result = await response.json();
+
+      // Tu backend devuelve: { message, data: [...] }
+      setSuperheroes(result.data || []);
     } catch (error) {
-      console.error("Error cargando superheroes:", error);
+      console.error("Error trayendo superhéroes:", error);
       setSuperheroes([]);
     } finally {
       setLoading(false);
@@ -33,9 +35,7 @@ export const HomePage = () => {
     loadSuperheroes();
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   return (
     <div className="container mx-auto px-4 pb-8">
@@ -68,6 +68,7 @@ export const HomePage = () => {
               <h3 className="text-xl font-semibold text-gray-800">
                 {hero.superhero}
               </h3>
+              <p className="text-gray-600 text-sm">{hero.alter_ego}</p>
             </div>
           </div>
         ))}
