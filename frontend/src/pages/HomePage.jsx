@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import { Loading } from "../components/Loading";
 
 export const HomePage = () => {
-  // TODO: Integrar lógica para obtener superhéroes desde la API
-  // TODO: Implementar useState para almacenar la lista de superhéroes
   const [superheroes, setSuperheroes] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const navigate = useNavigate();
-  // TODO: Implementar función para recargar superhéroes
 
   const loadSuperheroes = async () => {
     try {
@@ -20,20 +14,28 @@ export const HomePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error();
+        console.error("Error al cargar superheroes");
+        setSuperheroes([]);
+        return;
       }
 
       const data = await response.json();
       setSuperheroes(data);
     } catch (error) {
-      navigate("/login");
+      console.error("Error cargando superheroes:", error);
+      setSuperheroes([]);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     loadSuperheroes();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="container mx-auto px-4 pb-8">
@@ -43,9 +45,7 @@ export const HomePage = () => {
 
       <div className="flex justify-center mb-8">
         <button
-          onClick={() => {
-            // TODO: Implementar función para recargar superhéroes
-          }}
+          onClick={loadSuperheroes}
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded transition-colors"
         >
           Recargar
