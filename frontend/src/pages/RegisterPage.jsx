@@ -38,7 +38,7 @@ export const RegisterPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("http://localhost:3000/api/register", {
         method: "POST",
         credentials: "include",
         headers: {
